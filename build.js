@@ -20,7 +20,7 @@ function bump() {
   if (process.argv[2]) {
     var manifestPath = './manifest.json';
     var manifest = require(manifestPath);
-    var version = manifest.verson.split('.');
+    var version = manifest.version.split('.');
     // Update last digit to $TRAVIS_BUILD_NUMBER
     manifest.verson = version[0] + '.' + version[1] + '.' + process.argv[2];
     console.log('Bumping version to ' + manifest.version);
