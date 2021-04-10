@@ -34,7 +34,7 @@ function createZip() {
   var checkDir = fs.existsSync('build') || fs.mkdirSync('build');
   var output = fs.createWriteStream('build/JustDoIt.zip');
   var archive = archiver('zip');
-  output.on('close', () => {
+  output.on('end', () => {
     console.log('ZIP Created - build/JustDoIt.zip');
     console.log('Wrote ' + archive.pointer() + ' bytes.');
   });
