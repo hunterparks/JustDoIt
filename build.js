@@ -34,7 +34,7 @@ function createZip() {
   var checkDir = fs.existsSync('build') || fs.mkdirSync('build');
   var output = fs.createWriteStream('build/JustDoIt.zip');
   var archive = archiver('zip');
-  output.on('end', () => {
+  output.on('close', () => {
     console.log('ZIP Created - build/JustDoIt.zip');
     console.log('Wrote ' + archive.pointer() + ' bytes.');
   });
@@ -42,7 +42,23 @@ function createZip() {
     throw err;
   });
   archive.pipe(output);
-  archive.glob('!(build|node_modules)*');
-  archive.glob('!(build|node_modules)/**/*');
+  archive.glob('_locales');
+  archive.glob('_locales/*');
+  archive.glob('_locales/**/*');
+  archive.glob('assets');
+  archive.glob('assets/*');
+  archive.glob('assets/**/*');
+  archive.glob('images');
+  archive.glob('images/*');
+  archive.glob('images/**/*');
+  archive.glob('scripts');
+  archive.glob('scripts/*');
+  archive.glob('scripts/**/*');
+  archive.glob('styles');
+  archive.glob('styles/*');
+  archive.glob('styles/**/*');
+  archive.glob('manifest.json');
+  //archive.glob('!(build|node_modules)*');
+  //archive.glob('!(build|node_modules)/**/*');
   archive.finalize();
 }
