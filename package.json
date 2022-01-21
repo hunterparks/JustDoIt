@@ -1,12 +1,8 @@
 {
   "devDependencies": {
-    "archiver": "^5.3.0",
-    "chrome-webstore-manager": "^0.5.0",
-    "fs": "^0.0.1-security",
-    "jshint": "^2.13.3"
+    "archiver": "^5.3.0"
   },
   "scripts": {
-    "build": "node build.js",
-    "test": "jshint ./scripts"
+    "build": "node build.js"
   }
 }
