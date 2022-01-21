@@ -1,32 +1,43 @@
-chrome.browserAction.onClicked.addListener(
-  () => {
-    chrome.tabs.getSelected(
-      null,
-      (tabRef) => {
-        let tabUrl = tabRef.url;
-        if (tabUrl.indexOf("chrome.google.com/webstore") >= 0) {
-          alert("This extension will not run on the Chrome Web Store.\n" +
-                "Please try on another tab.\n" +
-                "DON'T LET YOUR DREAMS BE DREAMS!\n" +
-                "DO IT!!!");
+function showAlert(message) {
+    alert(message);
+}
+
+chrome.action.onClicked.addListener(
+    (tab) => {
+        let tabUrl = tab.url;
+        if (tabUrl.indexOf('chrome.google.com/webstore') >= 0) {
+            const message = `This extension will not run on the Chrome Web Store.
+Please try on another tab.
+DON'T LET YOUR DREAMS BE DREAMS!
+DO IT!!!`;
+            chrome.scripting.executeScript({
+                target: { tabId: tab.id },
+                func: showAlert(message)
+            });
         } else if (tabUrl.indexOf("chrome://") >= 0) {
-          alert("This extension will not run on this website.\n" +
-                "Please try on another tab.\n" +
-                "WHAT ARE YOU WAITING FOR?\n" +
-                "DO IT!!!");
+            const message = `This extension will not run on this website.
+Please try on another tab.
+WHAT ARE YOU WAITING FOR?
+DO IT!!!`;
+            chrome.scripting.executeScript({
+                target: { tabId: tab.id },
+                func: showAlert(message)
+            });
         }
-        chrome.tabs.executeScript(
-          null,
-          { file: "scripts/jquery.min.js" },
-          () => {
-            chrome.tabs.executeScript(
-              null,
-              { file: "scripts/doit.js" },
-              null
-            );
-          }
+        chrome.scripting.executeScript(
+            {
+                target: { tabId: tab.id },
+                files: [ 'scripts/jquery.min.js' ]
+            },
+            () => {
+                chrome.scripting.executeScript(
+                    {
+                        target: { tabId: tab.id },
+                        files: [ 'scripts/doit.js' ]
+                    },
+                    null
+                );
+            }
         );
-      }
-    );
-  }
+    }
 );
